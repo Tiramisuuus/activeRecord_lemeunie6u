@@ -33,7 +33,7 @@ public class Film {
         stmt.executeUpdate(drop);
     }
 
-    public void save() throws SQLException {
+    public void save() throws SQLException, RealisateurAbsentException {
         if(id > -1){
             update();
         }
@@ -42,7 +42,10 @@ public class Film {
         }
     }
 
-    private void  update() throws SQLException {
+    private void  update() throws SQLException, RealisateurAbsentException {
+        if (id_real == -1) {
+            throw new RealisateurAbsentException();
+        }
         Connection connect = DBConnection.getInstance().getConnection();
         String SQLprep = "update Film set id=?, titre=?, id_real=? where id=?;";
         PreparedStatement prep = connect.prepareStatement(SQLprep);
@@ -53,13 +56,15 @@ public class Film {
 
     }
 
-    private void saveNew() throws SQLException {
-        String SQLPrep = "INSERT INTO Film (id, titre, id_real) VALUES (?,?,?);";
+    private void saveNew() throws SQLException, RealisateurAbsentException {
+        if (id_real == -1) {
+            throw new RealisateurAbsentException();
+        }
+        String SQLPrep = "INSERT INTO Film (titre, id_real) VALUES (?,?);";
         Connection connect = DBConnection.getInstance().getConnection();
         PreparedStatement prep = connect.prepareStatement(SQLPrep, Statement.RETURN_GENERATED_KEYS);
-        prep.setInt(1, id);
-        prep.setString(2, titre);
-        prep.setInt(3, id_real);
+        prep.setString(1, titre);
+        prep.setInt( 2, id_real);
         prep.executeUpdate();
 
         // recuperation de la derniere ligne ajoutee (auto increment)
