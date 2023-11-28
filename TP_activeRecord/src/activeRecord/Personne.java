@@ -42,6 +42,7 @@ public class Personne {
     public String toString(){
         return "Personne("+this.id+") "+this.nom+", "+this.prenom;
     }
+
     public static void createTable() throws SQLException {
         String createString = "CREATE TABLE Personne ( " + "ID INTEGER  AUTO_INCREMENT, " + "NOM varchar(40) NOT NULL, " + "PRENOM varchar(40) NOT NULL, " + "PRIMARY KEY (ID))";
         Connection connect = DBConnection.getInstance().getConnection();
@@ -55,6 +56,7 @@ public class Personne {
         Statement stmt = connect.createStatement();
         stmt.executeUpdate(drop);
     }
+
     public void save() throws SQLException {
         if(id > -1){
             update();
@@ -63,6 +65,7 @@ public class Personne {
             saveNew();
         }
     }
+
     private void  update() throws SQLException {
         Connection connect = DBConnection.getInstance().getConnection();
         String SQLprep = "update Personne set nom=?, prenom=? where id=?;";
@@ -73,6 +76,7 @@ public class Personne {
         prep.execute();
 
     }
+
     private void saveNew() throws SQLException {
         String SQLPrep = "INSERT INTO Personne (nom, prenom) VALUES (?,?);";
         Connection connect = DBConnection.getInstance().getConnection();
@@ -89,18 +93,20 @@ public class Personne {
             autoInc = rs.getInt(1);
         }
         this.id = autoInc;
-
-}
+    }
 
     public String getNom() {
         return nom;
     }
+
     public String getPrenom() {
         return prenom;
     }
+
     public int getId() {
         return id;
     }
+
     public static ArrayList<Personne> findByName(String nom) throws SQLException {
         String SQLPrep = "SELECT * FROM Personne WHERE nom = ?;";
         Connection connect = DBConnection.getInstance().getConnection();
@@ -123,6 +129,7 @@ public class Personne {
             System.out.println(p.toString());        }
         return list;
     }
+
     public static Personne findById(int id) throws SQLException {
         String SQLPrep = "SELECT * FROM Personne WHERE id=?;";
         Personne p = null;
@@ -140,17 +147,16 @@ public class Personne {
             p.id = idget;
         }
         return p;
-
-
-
-
     }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
+
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
+
     public void delete() throws SQLException {
         String SQLPrep = "DELETE FROM Personne WHERE id=?;";
         Connection connect = DBConnection.getInstance().getConnection();
