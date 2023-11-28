@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class FilmTest {
 
@@ -95,6 +96,30 @@ public class FilmTest {
         Film f = Film.findById(8);
         Film res = null;
         assertEquals(res, f, "pas de film correspondant");
+    }
+
+    @Test
+    /**
+     * test de recherche par realisateur
+     * @throws SQLException
+     */
+    public void testFindByRealisateur() throws SQLException {
+        Personne p = Personne.findByName("Spielberg").get(0);
+        Film f = Film.findByRealisateur(p).get(0);
+        assertEquals("Arche perdue", f.getTitre());
+        assertEquals("Spielberg", f.getRealisateur().getNom());
+    }
+
+    @Test
+    /**
+     * deuxieme test de recherche par realisateur
+     * @throws SQLException
+     */
+    public void testFindByRealisateurBis() throws SQLException {
+        Personne p = Personne.findByName("Fincher").get(0);
+        Film f = Film.findByRealisateur(p).get(0);
+        assertEquals("Alien3", f.getTitre());
+        assertEquals("Fincher", f.getRealisateur().getNom());
     }
 
     @Test
