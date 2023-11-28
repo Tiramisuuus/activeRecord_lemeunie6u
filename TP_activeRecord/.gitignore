@@ -27,3 +27,9 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### InteliJ IDEA ###
+.xml
+.idea
+.iml
+.gitignore
