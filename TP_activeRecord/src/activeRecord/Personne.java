@@ -137,7 +137,7 @@ public class Personne {
             String prenom = rs.getString("prenom");
             int idget = rs.getInt("id");
             p = new Personne(nom, prenom);
-
+            p.id = idget;
         }
         return p;
 
@@ -157,5 +157,6 @@ public class Personne {
         PreparedStatement prep1 = connect.prepareStatement(SQLPrep);
         prep1.setInt(1, id);
         prep1.execute();
+        id = -1;
     }
 }
