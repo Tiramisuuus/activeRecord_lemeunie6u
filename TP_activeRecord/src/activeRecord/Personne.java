@@ -67,8 +67,8 @@ public class Personne {
         Connection connect = DBConnection.getInstance().getConnection();
         String SQLprep = "update Personne set nom=?, prenom=? where id=?;";
         PreparedStatement prep = connect.prepareStatement(SQLprep);
-        prep.setString(1, "nom");
-        prep.setString(2, "prenom");
+        prep.setString(1, nom);
+        prep.setString(2, prenom);
         prep.setInt(3, id);
         prep.execute();
 
@@ -77,8 +77,8 @@ public class Personne {
         String SQLPrep = "INSERT INTO Personne (nom, prenom) VALUES (?,?);";
         Connection connect = DBConnection.getInstance().getConnection();
         PreparedStatement prep = connect.prepareStatement(SQLPrep, Statement.RETURN_GENERATED_KEYS);
-        prep.setString(1, "nom");
-        prep.setString(2, "prenom");
+        prep.setString(1, nom);
+        prep.setString(2, prenom);
         prep.executeUpdate();
 
         // recuperation de la derniere ligne ajoutee (auto increment)
@@ -105,6 +105,7 @@ public class Personne {
         String SQLPrep = "SELECT * FROM Personne WHERE nom = ?;";
         Connection connect = DBConnection.getInstance().getConnection();
         PreparedStatement prep1 = connect.prepareStatement(SQLPrep);
+        prep1.setString(1, nom);
         prep1.execute();
         ResultSet rs = prep1.getResultSet();
         // s'il y a un resultat

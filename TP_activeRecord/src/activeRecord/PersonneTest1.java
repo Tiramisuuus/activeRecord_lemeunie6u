@@ -14,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class PersonneTest1 {
     @BeforeEach
     void avant() throws SQLException {
+        Personne.deleteTable();
         Personne.createTable();
         Personne p1 = new Personne("Dupont", "Jean");
         p1.save();
