@@ -7,7 +7,9 @@ import java.util.Properties;
 public class DBConnection{
     private static DBConnection instance;
     private static Connection connect;
+    private String nomDB = "testpersonne";
     private DBConnection(){
+
 
     }
     public static synchronized DBConnection getInstance(){
@@ -25,7 +27,7 @@ public class DBConnection{
             String portNumber = "3306";
 
             // iL faut une base nommee testPersonne !
-            String dbName = "testpersonne";
+            String dbName = this.nomDB;
 
             // creation de la connection
             Properties connectionProps = new Properties();
@@ -39,4 +41,17 @@ public class DBConnection{
         }
         return connect;
     }
+    public synchronized void setNomDB(String nouveauNomDB) {
+        if (connect != null) {
+            try {
+                connect.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            connect = null;
+        }
+        this.nomDB = nouveauNomDB;
+    }
+
+
 }
